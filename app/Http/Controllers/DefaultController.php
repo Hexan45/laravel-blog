@@ -14,21 +14,21 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function articles() : string {
+    public function articles() : mixed {
         return 'Articles';
     }
 
-    public function article(Article $article) : string {
+    public function article(Article $article) : mixed {
         return view('show', [
             'articleData' => $article
         ]);
     }
 
-    public function about() : string {
+    public function about() : mixed {
         return 'About';
     }
 
-    public function contact() : string {
+    public function contact() : mixed {
         return 'Contact';
     }
 }

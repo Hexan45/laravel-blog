@@ -1,4 +1,4 @@
-@extends('layouts/index')
+@extends('layouts.index')
 
 @section('meta')
     <meta charset="utf-8">
@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}" />
 
     <link rel="canonical" href="http://localhost:8000/" />
 
@@ -98,40 +99,76 @@
 @section('content')
     <div class="inner_container">
 
+        @if(session()->has('status'))
+            <x-notification-template
+                :notificationType="session('status')['type']"
+                :notificationHeader="session('status')['header']"
+                :notificationMessage="session('status')['message']"
+            />
+        @endif
+
         <div class="back_link">
             <a href="{{ URL::previous() }}" class="link" style="color:#487beb;">Poprzednia strona</a>
         </div>
 
-        <article class="article_main_content">
+        <div class="form_container">
+            <h2 class="form_name">Formularz rejestracji</h2>
+            <form action="{{ route('user.register.validate') }}" method="POST" enctype="multipart/form-data">
 
-            <header class="article_header">
-                <div class="article_header_info">
-                    <time datetime="2021-03-02">
-                        <span>Dodano: </span>
-                        <span class="article_date">{{ get_only_date($articleData->article_created_at) }}</span>
-                        <span class="article_divider">/</span>
-                        <a href="#" style="color: #487beb;" class="link category_link">#{{ $articleData->category_id }}</a>
-                    </time>
-                </div>
-                <h2 class="article_title">{{ $articleData->title }}</h2>
-            </header>
+                @csrf
 
-            <div class="article_author">
-                <img src="{{ asset('/images/author.jpg') }}" alt="Image author" width="60" height="60" class="author_image" />
-                <span>{{ $articleData->author_id }}</span>
-            </div>
+                <label for="nickname">
+                    <span class="label_name">Nickname</span>
+                    <input type="text" id="nickname" class="input" name="nickname" placeholder="Podaj nick" value="{{ old('nickname') }}" />
+                    @if($errors->has('nickname'))
+                        <span class="error validator">{{ $errors->first('nickname') }}</span>
+                    @endif
+                </label>
 
-            <figure class="image_content">
-                <img src="{{ asset($articleData->image_path) }}" alt="Article image preview" style="width: 100%;" class="article_image" />
-            </figure>
+                <label for="email">
+                    <span class="label_name">Email</span>
+                    <input type="email" id="email" class="input" name="email" placeholder="Podaj swój email" value="{{ old('email') }}" />
+                    @if($errors->has('email'))
+                        <span class="error validator">{{ $errors->first('email') }}</span>
+                    @endif
+                </label>
 
-            <section class="post_full_content">
+                <label for="repeat_email">
+                    <span class="label_name">Powtórz email</span>
+                    <input type="email" id="repeat_email" class="input" name="email_confirmation" placeholder="Powtórz swój email" value="{{ old('email_confirmation') }}" />
+                    @if($errors->has('email_confirmation'))
+                        <span class="error validator">{{ $errors->first('email_confirmation') }}</span>
+                    @endif
+                </label>
 
-                {!! $articleData->description !!}
+                <label for="password">
+                    <span class="label_name">Hasło</span>
+                    <input type="password" id="password" class="input" name="password" placeholder="Podaj hasło" value="{{ old('password') }}" />
+                    @if($errors->has('password'))
+                        <span class="error validator">{{ $errors->first('password') }}</span>
+                    @endif
+                </label>
 
-            </section>
+                <label for="repeat_password">
+                    <span class="label_name">Powtórz hasło</span>
+                    <input type="password" id="repeat_password" class="input" name="password_confirmation" placeholder="Powtórz hasło" value="{{ old('password_confirmation') }}" />
+                    @if($errors->has('password_confirmation'))
+                        <span class="error validator">{{ $errors->first('password_confirmation') }}</span>
+                    @endif
+                </label>
 
-        </article>
+                <label for="image_file">
+                    <span class="label_name">Wybierz plik</span>
+                    <input type="file" id="image_file" class="input_file" name="image_file" />
+                    @if($errors->has('image_file'))
+                        <span class="error validator">{{ $errors->first('image_file') }}</span>
+                    @endif
+                </label>
+
+                <input type="submit" class="primary submit login_submit" value="Utwórz konto" />
+            </form>
+        </div>
+        
     </div>
 @endsection
 

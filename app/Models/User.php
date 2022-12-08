@@ -2,43 +2,60 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    const NUMBER_ROLES = [
+        '0' => 'User',
+        '1' => 'Administrator'
+    ];
+
+    protected $date = [
+        'registered_at'
+    ];
+
+    protected $table = 'users';
+    protected $primaryKey = 'id';
+
     protected $fillable = [
-        'name',
+        'nickname',
         'email',
+        'image_path',
         'password',
+        'email_verify_token',
+        'email_confirmed'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+    protected $attributes = [
+        'image_path' => 'uploaded/images/default-avatar.png',
+        'role' => 0,
+        'email_confirmed' => 0
     ];
+
+    public $timestamps = false;
+
+    protected function role() : Attribute {
+        return Attribute::make(
+            get: fn ($value) => self::NUMBER_ROLES[(string)$value],
+        );
+    }
+
+    public function hasRole(string $roleName) : bool {
+        list($roleName, $modelRole) = [
+            strtolower($roleName),
+            strtolower($this->role)
+        ];
+        return ($roleName == $modelRole);
+    }
+
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ccbd816a07b206f971042295b899d1ba",
+    "content-hash": "15c1702c8238295fc06600cadb700f5a",
     "packages": [
         {
             "name": "brick/math",
@@ -432,6 +432,105 @@
                 }
             ],
             "time": "2022-06-18T20:57:19+00:00"
+        },
+        {
+            "name": "elastic-email/web-api-client",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ElasticEmail/ElasticEmail.WebApiClient-php.git",
+                "reference": "76dbb57502fe27a4271e1b5d4bdddc14fd2d5450"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ElasticEmail/ElasticEmail.WebApiClient-php/zipball/76dbb57502fe27a4271e1b5d4bdddc14fd2d5450",
+                "reference": "76dbb57502fe27a4271e1b5d4bdddc14fd2d5450",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ElasticEmail": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ElasticEmail Dev Team",
+                    "email": "support@elasticemail.com",
+                    "homepage": "https://elasticemail.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily send emails with Elastic Email using Web API PHP Client https://elasticemail.com/",
+            "homepage": "https://github.com/ElasticEmail/ElasticEmail.WebApiClient-php",
+            "keywords": [
+                "api",
+                "elastic",
+                "elasticemail",
+                "email",
+                "transactional",
+                "web"
+            ],
+            "support": {
+                "issues": "https://github.com/ElasticEmail/ElasticEmail.WebApiClient-php/issues",
+                "source": "https://github.com/ElasticEmail/ElasticEmail.WebApiClient-php/tree/master"
+            },
+            "time": "2017-11-22T08:36:58+00:00"
+        },
+        {
+            "name": "flexflux/laravel-elastic-email",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wouterdeberg/laravel-elastic-email.git",
+                "reference": "c4e3ae366e9be13c41ded42e30b2322d070704bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wouterdeberg/laravel-elastic-email/zipball/c4e3ae366e9be13c41ded42e30b2322d070704bb",
+                "reference": "c4e3ae366e9be13c41ded42e30b2322d070704bb",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0|^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FlexFlux\\LaravelElasticEmail\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wouter de Berg",
+                    "email": "info@wouterdeberg.nl"
+                }
+            ],
+            "description": "Package to send emails with attachements via an Elastic Email Mailer.",
+            "keywords": [
+                "elastic",
+                "elastic email",
+                "email",
+                "flexflux",
+                "laravel"
+            ],
+            "support": {
+                "email": "info@wouterdeberg.nl",
+                "issues": "https://github.com/wouterdeberg/laravel-elastic-email/issues",
+                "source": "https://github.com/wouterdeberg/laravel-elastic-email/tree/2.0.0"
+            },
+            "time": "2022-09-23T08:00:32+00:00"
         },
         {
             "name": "fruitcake/php-cors",

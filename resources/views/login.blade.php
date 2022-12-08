@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}" />
 
     <link rel="canonical" href="http://localhost:8000/" />
 
@@ -62,32 +63,31 @@
             </nav>
 
             <div class="action_content">
-
+                
                 @unless(Auth::check())
                     <a href="{{ route('user.login') }}" class="primary submit">Zaloguj się</a>
                 @else
-                    <div class="content" onclick="toggleDrop(this)">
-                        <span class="user_nickname">
-                            <span style="font-weight: 500;">Witaj,</span> 
-                            {{ Auth::user()->nickname }}
-                        </span>
-                        <img src="{{ asset('storage/' . Auth::user()->image_path) }}" alt="Logged user avatar" style="width: 35px; height: 35px;" class="user_image show_drop" />
+                <div class="content" onclick="toggleDrop(this)">
+                    <span class="user_nickname">
+                        <span style="font-weight: 500;">Witaj,</span> 
+                        Nickname
+                    </span>
+                    <img src="{{ asset('uploaded/' . Auth::user()->image_path) }}" alt="Logged user avatar" style="width: 35px; height: 35px;" class="user_image show_drop" />
 
-                        <div class="dropdown">
-                            <ul>
-                                <li class="dropdown-account">Konto {{ Auth::user()->role }}a</li>
-                                <a href="#">
-                                    <li class="dropdown-item">Pokaż profil</li>
-                                </a>
-                                <a href="#">
-                                    <li class="dropdown-item">Ustawienia</li>
-                                </a>
-                                <a href="{{ route('user.logout') }}">
-                                    <li class="lined dropdown-item">Wyloguj się</li>
-                                </a>
-                            </ul>
-                        </div>
+                    <div class="dropdown">
+                        <ul>
+                            <a href="#">
+                                <li class="dropdown-item">Pokaż profil</li>
+                            </a>
+                            <a href="#">
+                                <li class="dropdown-item">Ustawienia</li>
+                            </a>
+                            <a href="{{ route('user.logout') }}">
+                                <li class="lined dropdown-item">Wyloguj się</li>
+                            </a>
+                        </ul>
                     </div>
+                </div>
                 @endunless
 
             </div>
@@ -97,53 +97,58 @@
 @endsection
 
 @section('content')
-    @if(session()->has('status'))
-        <x-notification-template 
-            :notificationType="session('status')['type']"
-            :notificationHeader="session('status')['header']"
-            :notificationMessage="session('status')['message']"
-        />
-    @endif
-    <x-section-name :sectionName="$section" />
-    <section class="new_articles grid_articles">
+    <div class="inner_container">
 
-        @foreach($data as $article)
-            <x-article-template
-                :imagePath="$article->image_path"
-                :imageAlternative="$article->image_alternate"
-                :authorID="$article->author_id"
-                :id="$article->id"
-                :title="$article->title"
-                :excerpt="$article->excerpt"
-                :articleCreatedAt="$article->article_created_at"
+        @if(session()->has('status'))
+            <x-notification-template
+                :notificationType="session('status')['type']"
+                :notificationHeader="session('status')['header']"
+                :notificationMessage="session('status')['message']"
             />
-        @endforeach
+        @endif
 
-    </section>
-
-    <aside class="aside_info">
-
-        <h4 class="widget_name">O mnie</h4>
-        <div class="aside_widget">
-            <figcaption class="category_content">
-                <img src="{{ asset('images/author.jpg') }}" alt="Sitting man he welcome to camera" class="category_photo" width="60" height="60" />
-                <h4 class="category_name">Bob Budowniczy</h4>
-            </figcaption>
-            <p class="widget_description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ut ante ac diam ultricies fringilla rhoncus ut arcu. Maecenas id massa tincidunt, laoreet odio vitae, efficitur lectus.
-            </p>
+        <div class="back_link">
+            <a href="{{ URL::previous() }}" class="link" style="color:#487beb;">Poprzednia strona</a>
         </div>
 
-        <h4 class="widget_name">Skontaktuj się ze mną</h4>
-        <div class="aside_widget">
-            <p class="widget_description">
-                Kontakt to podstawa, jeśli masz jakieś pytania, zapraszam od formularza kontaktu :)
-            </p>
+        <div class="form_container">
+            <h2 class="form_name">Formularz logowania</h2>
+            <form action="{{ route('user.login.auth') }}" method="POST">
+
+                @csrf
+
+                <label for="username">
+                    <span class="label_name">Nazwa</span>
+                    <input type="text" id="username" class="input" name="username" placeholder="Podaj email lub nazwę użytkownika" value="{{ old('username') }}" />
+                    @if($errors->has('username'))
+                        <span class="error validator">{{ $errors->first('username') }}</span>
+                    @endif
+                </label>
+
+                <label for="password">
+                    <span class="label_name">Hasło</span>
+                    <input type="password" id="password" class="input" name="password" placeholder="Podaj hasło" />
+                    @if($errors->has('password'))
+                        <span class="error validator">{{ $errors->first('password') }}</span>
+                    @endif
+                </label>
+
+                <input type="submit" class="primary submit login_submit" value="Zaloguj się" />
+            </form>
+
+            <div class="actions">
+                <div class="action">
+                    <span>Nie posiadasz konta?</span> <a href="{{ route('user.register') }}" style="color:#487beb;" class="link">Zarejestruj się</a>
+                </div>
+
+                <div class="action">
+                    <span>Zapomniałeś hasła?</span> <a href="#" class="link" style="color:#487beb;">Kliknij tutaj</a>
+                </div>
+            </div>
+
         </div>
-
-    </aside>
-
-    <div style="clear:both;"></div>
+        
+    </div>
 @endsection
 
 @section('footer')
@@ -163,16 +168,16 @@
             <div class="group_content">
                 <ul>
                     <li>
-                        <a href="{{ route('default.home') }}" class="link footer_link">Strona główna</a>
+                        <a href="#" class="link footer_link">Strona główna</a>
                     </li>
                     <li>
-                        <a href="{{ route('default.articles') }}" class="link footer_link">Artykuły</a>
+                        <a href="#" class="link footer_link">Artykuły</a>
                     </li>
                     <li>
-                        <a href="{{ route('default.about') }}" class="link footer_link">O mnie</a>
+                        <a href="#" class="link footer_link">O mnie</a>
                     </li>
                     <li>
-                        <a href="{{ route('default.contact') }}" class="link footer_link">Kontakt</a>
+                        <a href="#" class="link footer_link">Kontakt</a>
                     </li>
                     <li>
                         <a href="#" class="link footer_link">Logowanie</a>

@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DefaultController;
-use App\Http\Controllers\CeoController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,19 +22,51 @@ Route::controller(DefaultController::class)->group(function () {
         ->name('default.home');
 
     Route::get('/articles', 'articles')
-        ->name('default.articles');
+        ->name('default.articles')
+        ->middleware('auth.user:loggedIn');
 
     Route::get('/article/{article}', 'article')
         ->where('id', '[0-9]+')
-        ->name('default.article');
+        ->name('default.article')
+        ->middleware('auth.user:loggedIn');
 
     Route::get('/about-me', 'about')
-        ->name('default.about');
+        ->name('default.about')
+        ->middleware('auth.user:loggedIn');
 
     Route::get('/contact', 'contact')
-        ->name('default.contact');
+        ->name('default.contact')
+        ->middleware('auth.user:loggedIn');
 });
 
-Route::prefix('ceo')->group(function () {
-    Route::get('/login', [CeoController::class, 'login']);
+Route::prefix('user')->group(function () {
+    Route::get('/login', [LoginController::class, 'login'])
+        ->name('user.login')
+        ->middleware('auth.user:notLoggedIn');
+
+    Route::post('/login', [LoginController::class, 'loginAuth'])
+        ->name('user.login.auth')
+        ->middleware('auth.user:notLoggedIn');
+
+    Route::get('/register', [RegisterController::class, 'register'])
+        ->name('user.register')
+        ->middleware('auth.user:notLoggedIn');
+
+    Route::post('/register', [RegisterController::class, 'registerValidate'])
+        ->name('user.register.validate')
+        ->middleware('auth.user:notLoggedIn');
+
+    Route::get('/auth-token/{token}', [AuthController::class, 'emailVerify'])
+        ->name('user.auth.token')
+        ->where('token', '[a-zA-Z0-9]+')
+        ->middleware('auth.user:notLoggedIn');
+    
+    Route::get('/logout', [AuthController::class, 'logout'])
+        ->name('user.logout')
+        ->middleware('auth.user:loggedIn');
+});
+
+    //404 page
+Route::fallback(function() {
+    return view('_404');
 });

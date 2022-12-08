@@ -97,53 +97,24 @@
 @endsection
 
 @section('content')
-    @if(session()->has('status'))
-        <x-notification-template 
-            :notificationType="session('status')['type']"
-            :notificationHeader="session('status')['header']"
-            :notificationMessage="session('status')['message']"
-        />
-    @endif
-    <x-section-name :sectionName="$section" />
-    <section class="new_articles grid_articles">
-
-        @foreach($data as $article)
-            <x-article-template
-                :imagePath="$article->image_path"
-                :imageAlternative="$article->image_alternate"
-                :authorID="$article->author_id"
-                :id="$article->id"
-                :title="$article->title"
-                :excerpt="$article->excerpt"
-                :articleCreatedAt="$article->article_created_at"
-            />
-        @endforeach
-
-    </section>
-
-    <aside class="aside_info">
-
-        <h4 class="widget_name">O mnie</h4>
-        <div class="aside_widget">
-            <figcaption class="category_content">
-                <img src="{{ asset('images/author.jpg') }}" alt="Sitting man he welcome to camera" class="category_photo" width="60" height="60" />
-                <h4 class="category_name">Bob Budowniczy</h4>
-            </figcaption>
-            <p class="widget_description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ut ante ac diam ultricies fringilla rhoncus ut arcu. Maecenas id massa tincidunt, laoreet odio vitae, efficitur lectus.
-            </p>
+    <div class="error_content">
+        <div class="_404_content">
+            <h2>Ups... Dlaczego tutaj nic nie ma?</h2>
+            <p>Przyjżyjmy się temu, dlaczego na tej stronie nie ma żadnej treści, a powodów może być kilka:</p>
+            <ul>
+                <li>Adres wprowadzony w przeglądarce nie istnieje w tej witrynie i napotkałeś/aś ten błąd</li>
+                <li>Kliknąłeś/aś link otwierający artykuł/profil etc. który już nie istnieje w tej witrynie</li>
+                <li>Wprowadziłeś/aś prawidłowy adres, jednak serwer strony nie odnalazł pasującego pliku z różnych powodów i znalazłeś/aś się tutaj</li>
+            </ul>
+            <p>Zachęcam Cię do odwiedzenia bezpiecznego miejsca, trochę tutaj pusto...</p>
+            <div class="back_link">
+                <a href="{{ route('default.home') }}" class="link" style="color:#487beb;">Powrót do strony głównej</a>
+            </div>
         </div>
-
-        <h4 class="widget_name">Skontaktuj się ze mną</h4>
-        <div class="aside_widget">
-            <p class="widget_description">
-                Kontakt to podstawa, jeśli masz jakieś pytania, zapraszam od formularza kontaktu :)
-            </p>
+        <div class="_404_image">
+            <img src="{{ asset('images/404-not-found.svg') }}" alt="404 numbers with sitting woman in 0 and flying ufo in background" style="width: 50%" />
         </div>
-
-    </aside>
-
-    <div style="clear:both;"></div>
+    </div>
 @endsection
 
 @section('footer')
