@@ -87,17 +87,21 @@
     <x-section-name :sectionName="$section" />
     <section class="new_articles grid_articles">
 
-        @foreach($data as $article)
-            <x-article-template
-                :imagePath="$article->image_path"
-                :imageAlternative="$article->image_alternate"
-                :authorNickname="$article->author->nickname"
-                :id="$article->id"
-                :title="$article->title"
-                :excerpt="$article->excerpt"
-                :articleCreatedAt="$article->article_created_at"
-            />
-        @endforeach
+        @unless($data->isEmpty())
+            @foreach($data as $article)
+                <x-article-template
+                    :imagePath="$article->image_path"
+                    :imageAlternative="$article->image_alternate"
+                    :authorNickname="$article->author->nickname"
+                    :id="$article->id"
+                    :title="$article->title"
+                    :excerpt="$article->excerpt"
+                    :articleCreatedAt="$article->article_created_at"
+                />
+            @endforeach
+        @else
+            Nie ma nic do pokazania
+        @endunless
 
     </section>
 
@@ -166,11 +170,15 @@
             <h5 class="group_name">Ostatnio na blogu</h5>
             <div class="group_content">
                 <ul>
-                    @for($i = 0; $i < 4; $i++)
-                        <li>
-                            <a href="{{ route('default.article', ['article' => $data[$i]->id]) }}" class="link footer_link">{{ $data[$i]->title }}</a>
-                        </li>
-                    @endfor
+                    @unless($data->isEmpty())
+                        @for($i = 0; $i < 4; $i++)
+                            <li>
+                                <a href="{{ route('default.article', ['article' => $data[$i]->id]) }}" class="link footer_link">{{ $data[$i]->title }}</a>
+                            </li>
+                        @endfor
+                    @else
+                        Nie istnieje żaden artykuł
+                    @endunless
                 </ul>
             </div>
         </div>
