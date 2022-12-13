@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/default.css') }}" />
 
     <link rel="canonical" href="http://localhost:8000/" />
 
@@ -66,28 +67,7 @@
                 @unless(Auth::check())
                     <a href="{{ route('user.login') }}" class="primary submit">Zaloguj się</a>
                 @else
-                    <div class="content" onclick="toggleDrop(this)">
-                        <span class="user_nickname">
-                            <span style="font-weight: 500;">Witaj,</span> 
-                            {{ Auth::user()->nickname }}
-                        </span>
-                        <img src="{{ asset('storage/' . Auth::user()->image_path) }}" alt="Logged user avatar" style="width: 35px; height: 35px;" class="user_image show_drop" />
-
-                        <div class="dropdown">
-                            <ul>
-                                <li class="dropdown-account">Konto {{ Auth::user()->role }}a</li>
-                                <a href="#">
-                                    <li class="dropdown-item">Pokaż profil</li>
-                                </a>
-                                <a href="#">
-                                    <li class="dropdown-item">Ustawienia</li>
-                                </a>
-                                <a href="{{ route('user.logout') }}">
-                                    <li class="lined dropdown-item">Wyloguj się</li>
-                                </a>
-                            </ul>
-                        </div>
-                    </div>
+                    <x-user-settings />
                 @endunless
 
             </div>
@@ -111,7 +91,7 @@
             <x-article-template
                 :imagePath="$article->image_path"
                 :imageAlternative="$article->image_alternate"
-                :authorID="$article->author_id"
+                :authorNickname="$article->author->nickname"
                 :id="$article->id"
                 :title="$article->title"
                 :excerpt="$article->excerpt"
@@ -135,10 +115,11 @@
         </div>
 
         <h4 class="widget_name">Skontaktuj się ze mną</h4>
-        <div class="aside_widget">
+        <div class="aside_widget colorfy">
             <p class="widget_description">
-                Kontakt to podstawa, jeśli masz jakieś pytania, zapraszam od formularza kontaktu :)
+                Jeśli masz do mnie pytania biznesowe/propozycje etc. możesz skontaktować się ze mną za pomocą formularza kontaktu klikająć w poniższy przycisk, bądź w zakładkę kontakt znajdującą się w menu nawigacyjnym na górze ekranu.
             </p>
+            <a href="{{ route('default.contact') }}" class="colorfy_button submit">Skontaktuj się</a>
         </div>
 
     </aside>
@@ -185,15 +166,11 @@
             <h5 class="group_name">Ostatnio na blogu</h5>
             <div class="group_content">
                 <ul>
-                    <li>
-                        <a href="#" class="link footer_link">This is a default content title for this article</a>
-                    </li>
-                    <li>
-                        <a href="#" class="link footer_link">This is a default content title for this article</a>
-                    </li>
-                    <li>
-                        <a href="#" class="link footer_link">This is a default content title for this article</a>
-                    </li>
+                    @for($i = 0; $i < 4; $i++)
+                        <li>
+                            <a href="{{ route('default.article', ['article' => $data[$i]->id]) }}" class="link footer_link">{{ $data[$i]->title }}</a>
+                        </li>
+                    @endfor
                 </ul>
             </div>
         </div>

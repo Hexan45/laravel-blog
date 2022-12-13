@@ -14,7 +14,13 @@ input:-webkit-autofill:focus {
 }
 
 .form_container {
+    width: 500px;
+    margin: 0 auto;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06)!important;
+}
+
+.admin {
+    width: 1200px !important;
 }
 
 .input {
@@ -26,13 +32,29 @@ input:-webkit-autofill:focus {
     padding: 7px 10px;
 }
 
-.form_container form label:has(.validator) .input {
-    border: 1px solid var(--red600);
+.textarea {
+    color: #616877 !important;
+    border: 1px solid #d0d6e2;
+    border-radius: 4px;
+    font-size: 1.7em;
+    font-weight: 300;
+    box-sizing: border-box;
+    padding: 7px 15px;
+    resize: none;
 }
 
-.form_container {
-    width: 500px;
-    margin: 0 auto;
+.description {
+    min-height: 500px !important;
+}
+
+.textarea:active {
+    border: 1px solid #d0d6e2;
+}
+
+.form_container form label:has(.validator) .input,
+.form_container form label:has(.validator) .textarea,
+.form_container form label:has(.validator) .select-dropdown {
+    border: 1px solid var(--red600) !important;
 }
 
 .form_container .form_name {
@@ -79,6 +101,12 @@ input:-webkit-autofill:focus {
     width: 80%;
 }
 
+.form_container form label .textarea {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100px;
+}
+
 .form_container .actions {
     font-size: 1.4em;
     text-align: center;
@@ -97,4 +125,46 @@ input:-webkit-autofill:focus {
     display: block;
     font-size: 1.4em;
     margin: 5px 0 5px 2px;
+}
+
+.select-dropdown {
+    position: relative;
+    background-color: #e6e6e6;
+    width: auto;
+    float: left;
+    max-width: 100%;
+    border-radius: 2px;
+}
+
+.select-dropdown::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    right: 8px;
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #aaa;
+}
+
+.select-dropdown select {
+    display: block;
+    font-size: 1rem;
+    font-weight: 200;
+    width: 100%;
+    max-width: 100%;
+    padding: 8px 24px 8px 10px;
+    border: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.select-dropdown select:active,
+.select-dropdown select:focus {
+    outline: none;
+    box-shadow: none;
 }

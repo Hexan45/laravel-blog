@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class articleTemplate extends Component
+class postItem extends Component
 {
     /**
      * Create a new component instance.
@@ -12,13 +12,9 @@ class articleTemplate extends Component
      * @return void
      */
     public function __construct(
-        public string $imagePath,
-        public string $imageAlternative,
-        public string $authorNickname,
-        public int $id,
-        public string $title,
-        public string $excerpt,
-        public string $articleCreatedAt
+        public string $articleID,
+        public string $articleTitle,
+        public string $articleAuthorNickname
     )
     {
         //
@@ -31,6 +27,6 @@ class articleTemplate extends Component
      */
     public function render()
     {
-        return view('components.article-template');
+        return view('components.post-item');
     }
 }

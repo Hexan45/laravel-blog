@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/default.css') }}" />
 
     <link rel="canonical" href="http://localhost:8000/" />
 
@@ -67,27 +68,7 @@
                 @unless(Auth::check())
                     <a href="{{ route('user.login') }}" class="primary submit">Zaloguj się</a>
                 @else
-                <div class="content" onclick="toggleDrop(this)">
-                    <span class="user_nickname">
-                        <span style="font-weight: 500;">Witaj,</span> 
-                        Nickname
-                    </span>
-                    <img src="{{ asset('uploaded/' . Auth::user()->image_path) }}" alt="Logged user avatar" style="width: 35px; height: 35px;" class="user_image show_drop" />
-
-                    <div class="dropdown">
-                        <ul>
-                            <a href="#">
-                                <li class="dropdown-item">Pokaż profil</li>
-                            </a>
-                            <a href="#">
-                                <li class="dropdown-item">Ustawienia</li>
-                            </a>
-                            <a href="{{ route('user.logout') }}">
-                                <li class="lined dropdown-item">Wyloguj się</li>
-                            </a>
-                        </ul>
-                    </div>
-                </div>
+                    <x-user-settings />
                 @endunless
 
             </div>

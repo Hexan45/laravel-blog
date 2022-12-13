@@ -16,14 +16,16 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->longText('description');
+            $table->text('description');
             $table->text('excerpt');
             $table->string('image_path')->default('uploaded/images/office.png');
             $table->string('image_alternate')->default('Man sitting in office and working on computer');
-            $table->integer('author_id');
-            $table->integer('category_id');
-            $table->timestamp('article_created_at')->nullable();
+            $table->unsignedBigInteger('author_id');
+            $table->unsignedBigInteger('category_id');
+            $table->timestamp('article_created_at')->useCurrent();
             $table->timestamp('article_updated_at')->nullable();
+            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('category_id')->references('id')->on('articles_category');
         });
     }
 

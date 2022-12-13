@@ -18,5 +18,27 @@ class Article extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'excerpt',
+        'image_path',
+        'image_alternate',
+        'author_id',
+        'category_id'
+    ];
+
+    protected $attributes = [
+        'image_path' => 'images/office.png'
+    ];
+
+    public function author() {
+        return $this->hasOne(\App\Models\User::class, 'id', 'author_id');
+    }
+
+    public function category() {
+        return $this->hasOne(\App\Models\Category::class, 'id', 'category_id');
+    }
+
     use HasFactory;
 }

@@ -8,9 +8,12 @@ use App\Models\Article;
 class DefaultController extends Controller
 {
     public function index() : mixed {
+
+        $articles = Article::orderBy('article_created_at', 'desc')->take(5)->get();
+
         return view('home', [
             'section' => 'Najnowsze artykuły',
-            'data' => Article::orderBy('article_created_at', 'desc')->take(5)->get()
+            'data' => $articles
         ]);
     }
 
@@ -20,7 +23,9 @@ class DefaultController extends Controller
 
     public function article(Article $article) : mixed {
         return view('show', [
-            'articleData' => $article
+            'articleData' => $article,
+            'articleAuthor' => $article->author,
+            'articleCategory' => $article->category
         ]);
     }
 

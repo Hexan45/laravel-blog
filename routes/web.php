@@ -23,7 +23,7 @@ Route::controller(DefaultController::class)->group(function () {
 
     Route::get('/articles', 'articles')->name('default.articles')->middleware('auth.user:loggedIn');
 
-    Route::get('/article/{article}', 'article')->where('id', '[0-9]+')->name('default.article')->middleware('auth.user:loggedIn');
+    Route::get('/article/{article}', 'article')->where('article', '[0-9]+')->name('default.article')->middleware('auth.user:loggedIn');
 
     Route::get('/about-me', 'about')->name('default.about')->middleware('auth.user:loggedIn');
 
@@ -46,4 +46,14 @@ Route::prefix('user')->group(function () {
 
 Route::middleware(['auth.user:loggedIn', 'auth.user.role:Administrator'])->prefix('admin')->group(function() {
     Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+    Route::get('/edit/{article}', [AdminController::class, 'edit'])->where('article', '[0-9]+')->name('admin.dashboard.edit');
+
+    Route::patch('/edit/{article}', [AdminController::class, 'saveEdit'])->where('article', '[0-9]+')->name('admin.dashboard.store.edit');
+
+    Route::get('/delete/{article}', [AdminController::class, 'delete'])->where('article', '[0-9]+')->name('admin.dashboard.delete');
+
+    Route::get('/create', [AdminController::class, 'create'])->name('admin.dashboard.create');
+
+    Route::post('/create', [AdminController::class, 'store'])->name('admin.dashboard.store.create');
 });

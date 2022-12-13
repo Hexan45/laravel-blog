@@ -12,7 +12,7 @@ class User extends Authenticatable
     use HasFactory;
 
     const NUMBER_ROLES = [
-        '0' => 'User',
+        '0' => 'Użytkownik',
         '1' => 'Administrator'
     ];
 
@@ -56,6 +56,10 @@ class User extends Authenticatable
             strtolower($this->role)
         ];
         return ($roleName == $modelRole);
+    }
+
+    public function getUserID() : int {
+        return $this->id;
     }
 
 }

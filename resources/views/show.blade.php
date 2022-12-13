@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/default.css') }}" />
 
     <link rel="canonical" href="http://localhost:8000/" />
 
@@ -66,27 +67,7 @@
                 @unless(Auth::check())
                     <a href="{{ route('user.login') }}" class="primary submit">Zaloguj się</a>
                 @else
-                <div class="content" onclick="toggleDrop(this)">
-                    <span class="user_nickname">
-                        <span style="font-weight: 500;">Witaj,</span> 
-                        Nickname
-                    </span>
-                    <img src="{{ asset('uploaded/' . Auth::user()->image_path) }}" alt="Logged user avatar" style="width: 35px; height: 35px;" class="user_image show_drop" />
-
-                    <div class="dropdown">
-                        <ul>
-                            <a href="#">
-                                <li class="dropdown-item">Pokaż profil</li>
-                            </a>
-                            <a href="#">
-                                <li class="dropdown-item">Ustawienia</li>
-                            </a>
-                            <a href="{{ route('user.logout') }}">
-                                <li class="lined dropdown-item">Wyloguj się</li>
-                            </a>
-                        </ul>
-                    </div>
-                </div>
+                    <x-user-settings />
                 @endunless
 
             </div>
@@ -110,19 +91,19 @@
                         <span>Dodano: </span>
                         <span class="article_date">{{ get_only_date($articleData->article_created_at) }}</span>
                         <span class="article_divider">/</span>
-                        <a href="#" style="color: #487beb;" class="link category_link">#{{ $articleData->category_id }}</a>
+                        <a href="#" style="color: #487beb;" class="link category_link">#{{ $articleCategory->name }}</a>
                     </time>
                 </div>
                 <h2 class="article_title">{{ $articleData->title }}</h2>
             </header>
 
             <div class="article_author">
-                <img src="{{ asset('/images/author.jpg') }}" alt="Image author" width="60" height="60" class="author_image" />
-                <span>{{ $articleData->author_id }}</span>
+                <img src="{{ asset('storage/' . $articleAuthor->image_path) }}" alt="Image author" width="60" height="60" class="author_image" />
+                <span>{{ $articleAuthor->nickname }}</span>
             </div>
 
             <figure class="image_content">
-                <img src="{{ asset($articleData->image_path) }}" alt="Article image preview" style="width: 100%;" class="article_image" />
+                <img src="{{ asset('storage/' . $articleData->image_path) }}" alt="Article image preview" style="width: 100%;" class="article_image" />
             </figure>
 
             <section class="post_full_content">
