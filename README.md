@@ -18,6 +18,14 @@ php artisan key:generate
 ```
 
 Skonfiguruj plik `.env` gdzie: `APP_NAME` to nazwa twojego bloga, `APP_TIMEZONE` (trzeba dodać) to strefa czasowa preferowana przez Ciebie, `FILESYSTEM_DISK` (trzeba dodać) to miejsce zapisywania plików (szczegółowe informacje na ten temat znajdziesz w katalogu `config/filesystems.php`)
-Należy również skonfigurować połączenie z bazą danych w celu poprawnego działania
 
-Po przejściu wszystkich kroków możesz przystąpić do zainicjowania tabel w swojej bazie danych za pomocą komendy `php artisan migrate`
+**Uwaga! z racji, że projekt korzysta z bazy danych trzeba musisz skonfigurować swoje połączenie w pliku `.env` wraz ze sterownikiem email, który wysyła linki aktywujące konto po procesie rejestracji**
+
+Po poprawnej konfiguracji wykonaj poniższe komendy, aby wykonać migrację oraz stworzyć link symboliczny pomiędzy lokalnym katalogiem przechowywania oraz publicznym katalogiem dostępnym z widoku przeglądarki. Wykonaj następujące komendy:
+```sh
+php artisan migrate
+php artisan storage:link
+```
+
+# Działaj!
+Jeśli wszystko zostało odpowiednio skonfigurowane, wystarczy wywołać komendę `php artisan serve` i gotowe! Twój projekt znajduje się pod adresem `http://localhost:8000/`
