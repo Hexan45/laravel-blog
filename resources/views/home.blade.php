@@ -171,7 +171,7 @@
             <div class="group_content">
                 <ul>
                     @unless($data->isEmpty())
-                        @for($i = 0; $i < 4; $i++)
+                        @for($i = 0, $length = count($data); $i < $length; $i++)
                             <li>
                                 <a href="{{ route('default.article', ['article' => $data[$i]->id]) }}" class="link footer_link">{{ $data[$i]->title }}</a>
                             </li>
