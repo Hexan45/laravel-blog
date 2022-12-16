@@ -111,7 +111,7 @@
         <div class="aside_widget">
             <figcaption class="category_content">
                 <img src="{{ asset('images/author.jpg') }}" alt="Sitting man he welcome to camera" class="category_photo" width="60" height="60" />
-                <h4 class="category_name">Bob Budowniczy</h4>
+                <h4 class="category_name">Właściciel</h4>
             </figcaption>
             <p class="widget_description">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ut ante ac diam ultricies fringilla rhoncus ut arcu. Maecenas id massa tincidunt, laoreet odio vitae, efficitur lectus.
